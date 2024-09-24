@@ -34,11 +34,13 @@ func (controller *CategoryControllerImpl) Create(writer http.ResponseWriter, req
 
 func (controller *CategoryControllerImpl) Update(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
 	categoryUpdateRequest := web.CategoryUpdateRequest{}
-	helper.ReadFromRequestBody(request, &categoryCreateRequest)
+	helper.ReadFromRequestBody(request, &categoryUpdateRequest)
 
 	categoryId := params.ByName("categoryId")
 	id, err := strconv.Atoi(categoryId)
 	helper.PanicIfError(err)
+
+	categoryUpdateRequest.Id = id
 
 	categoryResponse := controller.CategoryService.Update(request.Context(), categoryUpdateRequest)
 	webResponse := web.WebResponse{
@@ -46,6 +48,7 @@ func (controller *CategoryControllerImpl) Update(writer http.ResponseWriter, req
 		Status: "OK",
 		Data:   categoryResponse,
 	}
+	helper.WriteToResponseBody(writer, webResponse)
 }
 
 func (controller *CategoryControllerImpl) Delete(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
