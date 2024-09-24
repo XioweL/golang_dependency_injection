@@ -1,5 +1,6 @@
 ### GET all categories
 GET http://localhost:3000/api/categories
+X-API-Key: RAHASIA
 Accept: application/json
 
 ### Create new category
@@ -13,7 +14,7 @@ Content-Type: application/json
 }
 
 ### GET Category by Id
-GET http://localhost:3000/api/categories/20
+GET http://localhost:3000/api/categories/2
 Accept: application/json
 
 
