@@ -1,14 +1,14 @@
-//go:build witeinject
-// +build witeinject
+//go:build wireinject
+// +build wireinject
 
 package simple
 
 import "github.com/google/wire"
 
-func InitializedService() *SimpleService {
+func InitializedService(isError bool) (*SimpleService, error) {
 	wire.Build(
 		NewSimpleRepository, NewSimpleService,
 	)
-	return nil
+	return nil, nil
 
 }
