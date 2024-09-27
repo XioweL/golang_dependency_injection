@@ -3,7 +3,11 @@
 
 package simple
 
-import "github.com/google/wire"
+import (
+	"github.com/google/wire"
+	"io"
+	"os"
+)
 
 func InitializedService(isError bool) (*SimpleService, error) {
 	wire.Build(
@@ -51,3 +55,32 @@ func InitializedFooBar() *FooBar {
 	return nil
 
 }
+
+var fooValue = &Foo{}
+var barValue = &Bar{}
+
+func InitializedFooBarUsingValue() *FooBar {
+	wire.Build(wire.Value(fooValue), wire.Value(barValue), wire.Struct(new(FooBar), "*"))
+	return nil
+
+}
+
+// BEGIN INJECTOR INTERFACE VALUE
+func InitializedReader() io.Reader {
+	wire.Build(wire.InterfaceValue(new(io.Reader), os.Stdin))
+	return nil
+
+}
+
+//END INJECTOR INTERFACE VALUE
+
+// BEGIN STRUCT FIELD PROVIDER
+func InitializedConfiguration() *Configuration {
+	wire.Build(
+		NewApplication,
+		wire.FieldsOf(new(*Application), "Configuration"),
+	)
+	return nil
+}
+
+// END STRUCT FIELD PROVIDER
