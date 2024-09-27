@@ -84,3 +84,12 @@ func InitializedConfiguration() *Configuration {
 }
 
 // END STRUCT FIELD PROVIDER
+
+// BEGIN CLEANUP FUNCTION
+// File Connection.go & file.go
+
+func InitializedConnection(name string) (*Connection, func()) {
+	wire.Build(NewConnection, NewFile)
+	return nil, nil
+
+}
